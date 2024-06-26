@@ -24,17 +24,17 @@ item_list = []
 for url in urls_list:
     try:
         item_api = pd.json_normalize(requests.get(url).json())
-        item_response = item_api[["ID","RequiredGrandCompanyRank.Tier","Item.ItemUICategory.IconHD","Item.Name","Item.ItemUICategory.Name_en","Item.IsUntradable","CostGCSeals","Item.StackSize"]] \
+        item_response = item_api[["ID","RequiredGrandCompanyRank.Tier","Item.ID","Item.ItemUICategory.IconHD","Item.Name","Item.ItemUICategory.Name_en","Item.IsUntradable","CostGCSeals","Item.StackSize"]] \
             .values.tolist()
         item_list = item_list + item_response
         row_processed += 1
-        if row_processed == 10:
+        if row_processed == 15:
             row_processed = 0
-            time.sleep(20)  
+            time.sleep(10)  
     except:
         continue
     
-GC_Col = ["ID","GC_Tier","HD_Icon","Item_Name","Item_Category","Untradable_Ind","GC_Seals","Stack_Size"]
-GCScripShop_df = pd.DataFrame(item_list, columns = GC_Col).sort_values(by=['ID'])
+GC_Col = ["GC_ID","GC_Tier","Item_ID","HD_Icon","Item_Name","Item_Category","Untradable_Ind","GC_Seals","Stack_Size"]
+GCScripShop_df = pd.DataFrame(item_list, columns = GC_Col).sort_values(by=['GC_ID'])
 
 display(GCScripShop_df)
