@@ -14,12 +14,6 @@ item_hist = requests.get(api_url+worldDcRegion+item_ids+timeRange).json()['items
 items_list = tradable_items.tolist()
 
 hist_list = []
-#for i in items_list:
-    #try:
-        #hist_list = hist_list + pd.json_normalize(flatten(item_hist[str(i)]))[["itemID","regularSaleVelocity","nqSaleVelocity","hqSaleVelocity","worldName","entries_0_pricePerUnit","entries_0_quantity","entries_0_hq","entries_0_buyerName","entries_0_timestamp"]].values.tolist()
-    #except KeyError:
-        #continue
-
 for i in items_list:
     try:
         hist_df = pd.json_normalize(item_hist[str(i)]).explode('entries').reset_index(drop=True)
